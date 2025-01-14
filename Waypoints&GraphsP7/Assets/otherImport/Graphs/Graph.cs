@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Graph
@@ -10,7 +11,7 @@ public class Graph
 
     List<Edge> edges = new List<Edge>();
     List<Node> nodes = new List<Node>();
-    List<Node> pathList = new List<Node>();
+    public List<Node> pathList = new List<Node>();
     public Graph() { }
 
     public void AddNode(GameObject id)
@@ -75,7 +76,7 @@ public class Graph
             Node thisNode = open[i];
             if(thisNode.getId() == endId)
             {
-                //reconstructPath(start, end);
+                ReconstructPath(start, end);
                 return true;
             }
 
@@ -112,6 +113,20 @@ public class Graph
             }
         }
         return false;
+    }
+
+    public void ReconstructPath(Node startId, Node endId)
+    {
+        pathList.Clear();
+        pathList.Add(endId);
+
+        var p = endId.cameFrom;
+        while(p != startId && p!= null)
+        {
+            pathList.Insert(0, p);
+            p = p.cameFrom;
+        }
+        pathList.Insert(0, startId);
     }
 
     int lowestF(List<Node> l)
