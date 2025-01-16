@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -52,10 +53,14 @@ public class Graph
 
     public bool AStar(GameObject startId, GameObject endId)
     {
+        
+
         Node start = FindNode(startId);
         Node end = FindNode(endId);
 
-        if(start == null || end == null)
+        if (startId == endId) return false;
+
+        if (start == null || end == null)
         {
             return false;
         }
